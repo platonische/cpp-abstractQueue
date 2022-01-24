@@ -34,7 +34,7 @@ public:
         return node;
     };
 
-    virtual int getValue(ElementAny<ANY>* node){
+    virtual ANY getValue(ElementAny<ANY>* node){
         return node->value;
     };
     virtual void setValue(ElementAny<ANY>* node, ANY Value){
@@ -49,6 +49,16 @@ public:
         text += " Value: ";
         text += to_string(node->value);
         return text;
+    };
+    virtual void sampleData(ANY* inputData){
+        int i = 0;
+        while (inputData[i] != '\0') {
+            this->addElement(
+                        this->createElement(inputData[i]),
+                        this->getLastElement()
+                        );
+            i++;
+        }
     };
 };
 

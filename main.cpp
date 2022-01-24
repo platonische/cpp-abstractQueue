@@ -10,7 +10,7 @@ int main()
 
     QueueAnyValue<int>* queue = new QueueAnyValue<int>();
 
-    //queue->sampleData(array);
+    queue->sampleData(array);
     queue->addElement(queue->createElement(12),queue->getLastElement());
     queue->addElement(queue->createElement(56),queue->getLastElement());
     queue->addElement(queue->createElement(85),NULL);

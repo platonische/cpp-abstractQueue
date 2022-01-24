@@ -113,57 +113,6 @@ public:
             this->changeFarElements(A,B);
         }
     };
-    virtual bool isElementsNeighbour(CustomElement *A, CustomElement *B)
-    {
-        return A->next == B || B->next == A;
-    };
-    virtual void changeNeighbourElements(CustomElement *A, CustomElement *B) {
-
-        CustomElement *First, *Second, *SecondNext, *Pre;
-
-        if (A->next == B) First = A;
-        if (B->next == A) First = B;
-
-        Second = First->next;
-        SecondNext = Second->next;
-        Pre = this->getPreElement(First);
-
-        if (Pre) Pre->next = Second;
-        else this->Head = Second;
-
-        Second->next = First;
-        First->next = SecondNext;
-    };
-    virtual void changeFarElements(CustomElement *A, CustomElement *B)
-    {
-        // Предыдущие элементы
-        CustomElement *PreA = this->getPreElement(A);
-        CustomElement *PreB = this->getPreElement(B);
-
-        // Меняем ссылки в самих элементах
-        CustomElement* ANext = A->next;
-        CustomElement* BNext = B->next;
-
-        A->next = BNext;
-        B->next = ANext;
-
-
-        // Меняем ссылки в педшествующих элементах
-        if (PreA) PreA->next = B;
-        if (PreB) PreB->next = A;
-
-
-        //Меняем голову
-        bool isHead = false;
-        if (A == this->Head && !isHead) {
-            this->Head = B;
-            isHead = true;
-        }
-        if (B == this->Head && !isHead) {
-            this->Head = A;
-            isHead = true;
-        }
-    };
 
     // Steps are functions for emulate while circle
     virtual CustomElement* getStep()
@@ -215,6 +164,56 @@ protected:
     CustomElement *Head = NULL;
     CustomElement *Marked = NULL;
     CustomElement *Step = NULL;
+
+    virtual bool isElementsNeighbour(CustomElement *A, CustomElement *B)
+    {
+        return A->next == B || B->next == A;
+    };
+    virtual void changeNeighbourElements(CustomElement *A, CustomElement *B) {
+
+        CustomElement *First, *Second, *SecondNext, *Pre;
+
+        if (A->next == B) First = A;
+        if (B->next == A) First = B;
+
+        Second = First->next;
+        SecondNext = Second->next;
+        Pre = this->getPreElement(First);
+
+        if (Pre) Pre->next = Second;
+        else this->Head = Second;
+
+        Second->next = First;
+        First->next = SecondNext;
+    };
+    virtual void changeFarElements(CustomElement *A, CustomElement *B)
+    {
+        // Предыдущие элементы
+        CustomElement *PreA = this->getPreElement(A);
+        CustomElement *PreB = this->getPreElement(B);
+
+        // Меняем ссылки в самих элементах
+        CustomElement* ANext = A->next;
+        CustomElement* BNext = B->next;
+
+        A->next = BNext;
+        B->next = ANext;
+
+        // Меняем ссылки в педшествующих элементах
+        if (PreA) PreA->next = B;
+        if (PreB) PreB->next = A;
+
+        //Меняем голову
+        bool isHead = false;
+        if (A == this->Head && !isHead) {
+            this->Head = B;
+            isHead = true;
+        }
+        if (B == this->Head && !isHead) {
+            this->Head = A;
+            isHead = true;
+        }
+    };
 };
 
 #endif // ABSTRACTQUEUE_H
